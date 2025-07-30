@@ -1,0 +1,232 @@
+[
+    {
+      "id": 1,
+      "title": "Titre I : Dispositions Générales",
+      "description": "Introduction au Code Électoral : objectifs et principes fondamentaux."
+    },
+    {
+      "id": 2,
+      "title": "Titre II : ELECAM - Organisation Générale",
+      "description": "Découverte d'ELECAM : son rôle, son indépendance et sa structure."
+    },
+    {
+      "id": 3,
+      "title": "Titre II : ELECAM - Le Conseil Électoral",
+      "description": "Fonctionnement du Conseil Électoral, ses attributions et incompatibilités."
+    },
+    {
+      "id": 4,
+      "title": "Titre II : ELECAM - La Direction Générale des Élections",
+      "description": "Rôle et missions de la Direction Générale des Élections."
+    },
+    {
+      "id": 5,
+      "title": "Titre II : ELECAM - Aspects Financiers & Divers",
+      "description": "Gestion budgétaire et autres dispositions relatives à ELECAM."
+    },
+    {
+      "id": 6,
+      "title": "Titre III : L'Électorat - Capacité & Incapacités",
+      "description": "Qui peut voter au Cameroun ? Conditions et restrictions du droit de vote."
+    },
+    {
+      "id": 7,
+      "title": "Titre III : Commissions Électorales Préparatoires",
+      "description": "Rôle des commissions dans l'établissement et la révision des listes."
+    },
+    {
+      "id": 8,
+      "title": "Titre III : Commissions Locales de Vote",
+      "description": "Composition et rôle des commissions chargées des bureaux de vote."
+    },
+    {
+      "id": 9,
+      "title": "Titre III : Commissions Départementales de Supervision",
+      "description": "Fonctions de surveillance et de contrôle des opérations électorales."
+    },
+    {
+      "id": 10,
+      "title": "Titre III : Commission Nationale de Recensement des Votes",
+      "description": "Décompte général des votes au niveau national."
+    },
+    {
+      "id": 11,
+      "title": "Titre III : Les Listes Électorales",
+      "description": "Comment sont établies, gérées et révisées les listes d'électeurs."
+    },
+    {
+      "id": 12,
+      "title": "Titre III : Les Cartes Électorales",
+      "description": "Obtention, distribution et usage des cartes d'électeur biométriques."
+    },
+    {
+      "id": 13,
+      "title": "Titre III : Convocation du Corps Électoral",
+      "description": "Procédure et délais pour la convocation des électeurs."
+    },
+    {
+      "id": 14,
+      "title": "Titre III : La Campagne Électorale",
+      "description": "Règles et interdictions durant la période de campagne électorale."
+    },
+    {
+      "id": 15,
+      "title": "Titre III : Déroulement du Scrutin",
+      "description": "Processus de vote dans les bureaux de vote."
+    },
+    {
+      "id": 16,
+      "title": "Titre III : Dépouillement des Votes",
+      "description": "Méthodes de comptage et de validation des bulletins de vote."
+    },
+    {
+      "id": 17,
+      "title": "Titre IV : Élection Présidentielle - Mandat & Scrutin",
+      "description": "Durée du mandat, mode de scrutin et rééligibilité du Président."
+    },
+    {
+      "id": 18,
+      "title": "Titre IV : Élection Présidentielle - Éligibilité & Incompatibilités",
+      "description": "Conditions pour être candidat à la Présidence et fonctions incompatibles."
+    },
+    {
+      "id": 19,
+      "title": "Titre IV : Élection Présidentielle - Déclaration de Candidature",
+      "description": "Processus de dépôt des candidatures, pièces requises et cautionnement."
+    },
+    {
+      "id": 20,
+      "title": "Titre IV : Élection Présidentielle - Contentieux & Résultats",
+      "description": "Gestion des litiges électoraux et proclamation officielle des résultats."
+    },
+    {
+      "id": 21,
+      "title": "Titre IV : Élection Présidentielle - Prestation de Serment & Vacance",
+      "description": "Cérémonie de prestation de serment et procédures en cas de vacance."
+    },
+    {
+      "id": 22,
+      "title": "Titre V : Élection des Députés - Mandat & Scrutin",
+      "description": "Durée du mandat, mode de scrutin et circonscriptions électorales pour les Députés."
+    },
+    {
+      "id": 23,
+      "title": "Titre V : Élection des Députés - Éligibilité & Incompatibilités",
+      "description": "Conditions pour être député et situations d'incompatibilité."
+    },
+    {
+      "id": 24,
+      "title": "Titre V : Élection des Députés - Candidatures & Contentieux",
+      "description": "Déclaration des candidatures des députés, contentieux et résultats."
+    },
+    {
+      "id": 25,
+      "title": "Titre VI : Élection des Conseillers Municipaux - Mandat & Scrutin",
+      "description": "Durée du mandat, mode de scrutin et nombre de conseillers municipaux."
+    },
+    {
+      "id": 26,
+      "title": "Titre VI : Élection des Conseillers Municipaux - Éligibilité & Incompatibilités",
+      "description": "Conditions d'éligibilité et incompatibilités pour les conseillers municipaux."
+    },
+    {
+      "id": 27,
+      "title": "Titre VI : Élection des Conseillers Municipaux - Candidatures & Résultats",
+      "description": "Procédure de candidature, recensement des votes et proclamation des résultats."
+    },
+    {
+      "id": 28,
+      "title": "Titre VI : Élection des Conseillers Municipaux - Contentieux",
+      "description": "Gestion des recours et annulations concernant les élections municipales."
+    },
+    {
+      "id": 29,
+      "title": "Titre VII : Le Référendum - Dispositions Générales",
+      "description": "Quand et comment un référendum est organisé au Cameroun."
+    },
+    {
+      "id": 30,
+      "title": "Titre VII : Le Référendum - Campagne & Opérations",
+      "description": "Règles de la campagne référendaire et déroulement du scrutin."
+    },
+    {
+      "id": 31,
+      "title": "Titre VII : Le Référendum - Contentieux & Résultats",
+      "description": "Recours et proclamation des résultats d'une consultation référendaire."
+    },
+    {
+      "id": 32,
+      "title": "Titre VIII : Élection des Sénateurs - Généralités & Scrutin",
+      "description": "Composition du Sénat, mandat et mode de scrutin pour les Sénateurs."
+    },
+    {
+      "id": 33,
+      "title": "Titre VIII : Élection des Sénateurs - Éligibilité & Incompatibilités",
+      "description": "Conditions d'éligibilité et incompatibilités des fonctions de Sénateur."
+    },
+    {
+      "id": 34,
+      "title": "Titre VIII : Élection des Sénateurs - Le Collège Électoral",
+      "description": "Composition et rôle du collège électoral sénatorial."
+    },
+    {
+      "id": 35,
+      "title": "Titre VIII : Élection des Sénateurs - Listes & Cartes Électorales",
+      "description": "Gestion des listes et cartes spécifiques pour l'élection des Sénateurs."
+    },
+    {
+      "id": 36,
+      "title": "Titre VIII : Élection des Sénateurs - Opérations & Recensement",
+      "description": "Déroulement du vote et centralisation des résultats pour les Sénateurs."
+    },
+    {
+      "id": 37,
+      "title": "Titre VIII : Élection des Sénateurs - Contentieux & Proclamation",
+      "description": "Litiges et annonce des résultats de l'élection sénatoriale."
+    },
+    {
+      "id": 38,
+      "title": "Titre IX : Élection des Conseillers Régionaux - Généralités & Scrutin",
+      "description": "Rôle des conseillers régionaux, composition et mode de scrutin."
+    },
+    {
+      "id": 39,
+      "title": "Titre IX : Élection des Conseillers Régionaux - Éligibilité & Incompatibilités",
+      "description": "Conditions d'éligibilité et règles d'incompatibilité pour les conseillers régionaux."
+    },
+    {
+      "id": 40,
+      "title": "Titre IX : Élection des Conseillers Régionaux - Opérations & Résultats",
+      "description": "Préparation, déroulement et proclamation des résultats des élections régionales."
+    },
+    {
+      "id": 41,
+      "title": "Titre IX : Élection des Conseillers Régionaux - Contentieux",
+      "description": "Recours et gestion des litiges électoraux pour les élections régionales."
+    },
+    {
+      "id": 42,
+      "title": "Titre X : Vote des Citoyens Camerounais à l'Étranger",
+      "description": "Modalités d'exercice du droit de vote pour les Camerounais de la diaspora."
+    },
+    {
+      "id": 43,
+      "title": "Titre XI : Financement des Partis Politiques",
+      "description": "Sources et règles de financement des partis politiques."
+    },
+    {
+      "id": 44,
+      "title": "Titre XI : Financement des Campagnes Électorales & Référendaires",
+      "description": "Contribution de l'État aux dépenses de campagne."
+    },
+    {
+      "id": 45,
+      "title": "Titre XII : Dispositions Pénales",
+      "description": "Sanctions pour les infractions liées au processus électoral."
+    },
+    {
+      "id": 46,
+      "title": "Titre XII : Dispositions Diverses et Finales",
+      "description": "Autres règles importantes et abrogations de lois antérieures."
+    }
+  ]
