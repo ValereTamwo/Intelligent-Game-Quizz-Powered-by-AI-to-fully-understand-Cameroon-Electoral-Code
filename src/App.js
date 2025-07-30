@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import LevelMap from './components/LevelMap';
 import QuizModal from './components/QizzModal';
+import QuizRecapModal from './components/QuizRecapModal';
 import LoadingSpinner from './components/LoadingSpinner';
 
 function App() {
@@ -13,7 +14,9 @@ function App() {
   const [quizNumber, setQuizNumber] = useState(0);
   const [successCount, setSuccessCount] = useState(0);
   const [showQuizModal, setShowQuizModal] = useState(false);
+  const [showRecapModal, setShowRecapModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [quizResults, setQuizResults] = useState([]);
 
   const topics = [
     { id: 1, title: "Titre I : Généralités", description: "Introduction au Code Électoral." },
@@ -64,7 +67,6 @@ function App() {
     { id: 46, title: "Dispositions Diverses", description: "Autres règles et abrogations." }
   ];
 
-
   const fetchQuiz = async (levelId) => {
     const topic = topics.find((t) => t.id === levelId);
     if (!topic) return;
@@ -76,6 +78,7 @@ function App() {
       });
       setCurrentQuiz(response.data.quiz);
       setShowQuizModal(true);
+      setQuizNumber((prev) => prev + 1); // Increment quizNumber after API response
     } catch (error) {
       console.error('Error fetching quiz:', error);
       toast.error('Failed to load quiz. Please try again.');
@@ -87,13 +90,15 @@ function App() {
   const handleLevelClick = (levelId) => {
     if (levelId === currentLevel) {
       console.log(`Niveau ${levelId} cliqué : "${topics[levelId - 1].title}"`);
-      setQuizNumber(1);
+      setQuizNumber(0);
       setSuccessCount(0);
+      setQuizResults([]);
       fetchQuiz(levelId);
     } else if (levelId < currentLevel && completedLevels.includes(levelId)) {
       toast.info(`Niveau ${levelId} déjà complété. Vous pouvez le rejouer.`);
-      setQuizNumber(1);
+      setQuizNumber(0);
       setSuccessCount(0);
+      setQuizResults([]);
       fetchQuiz(levelId);
     } else {
       toast.warn(`Ce niveau est verrouillé. Complétez le niveau ${currentLevel} d'abord.`);
@@ -103,31 +108,45 @@ function App() {
   const handleQuizAnswer = (selectedAnswerId) => {
     if (!currentQuiz) return;
 
-    if (selectedAnswerId === currentQuiz.correct_answer_id) {
+    const isCorrect = selectedAnswerId === currentQuiz.correct_answer_id;
+    if (isCorrect) {
       setSuccessCount(successCount + 1);
       toast.success('Correct! Well done!');
     } else {
       toast.error('Incorrect. Try again next time!');
     }
 
+    // Store quiz result
+    setQuizResults([
+      ...quizResults,
+      {
+        quiz: currentQuiz,
+        selectedAnswerId,
+        isCorrect,
+      },
+    ]);
+
     if (quizNumber < 5) {
       fetchQuiz(currentLevel);
-      setQuizNumber(quizNumber + 1);
     } else {
-      if (successCount + (selectedAnswerId === currentQuiz.correct_answer_id ? 1 : 0) >= 5) {
-        setCompletedLevels([...completedLevels, currentLevel]);
-        setCurrentLevel(currentLevel + 1);
-        toast.success(`Niveau ${currentLevel} complété ! Prochain niveau débloqué.`);
-      } else {
-        toast.error(
-          `Vous avez ${successCount + (selectedAnswerId === currentQuiz.correct_answer_id ? 1 : 0)}/5 bonnes réponses. Réessayez le niveau ${currentLevel}.`
-        );
-      }
       setShowQuizModal(false);
       setCurrentQuiz(null);
-      setQuizNumber(0);
-      setSuccessCount(0);
+      setShowRecapModal(true);
     }
+  };
+
+  const handleRecapProceed = () => {
+    if (successCount >= 5) {
+      setCompletedLevels([...completedLevels, currentLevel]);
+      setCurrentLevel(currentLevel + 1);
+      toast.success(`Niveau ${currentLevel} complété ! Prochain niveau débloqué.`);
+    } else {
+      toast.error(`Vous avez ${successCount}/5 bonnes réponses. Réessayez le niveau ${currentLevel}.`);
+    }
+    setShowRecapModal(false);
+    setQuizNumber(0);
+    setSuccessCount(0);
+    setQuizResults([]);
   };
 
   const closeQuizModal = () => {
@@ -135,6 +154,7 @@ function App() {
     setCurrentQuiz(null);
     setQuizNumber(0);
     setSuccessCount(0);
+    setQuizResults([]);
   };
 
   return (
@@ -168,6 +188,14 @@ function App() {
             quizNumber={quizNumber}
             totalQuizzes={5}
             successCount={successCount}
+          />
+        )}
+        {showRecapModal && (
+          <QuizRecapModal
+            quizResults={quizResults}
+            successCount={successCount}
+            onProceed={handleRecapProceed}
+            onClose={() => setShowRecapModal(false)}
           />
         )}
       </main>

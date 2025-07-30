@@ -29,6 +29,16 @@ const QuizModal = ({ quiz, onAnswer, onClose, quizNumber, totalQuizzes, successC
               ✕
             </button>
           </div>
+          <div className="mb-4">
+            <div className="w-full bg-gray-700 rounded-full h-2.5">
+              <motion.div
+                className="bg-gradient-to-r from-purple-500 to-blue-500 h-2.5 rounded-full"
+                initial={{ width: 0 }}
+                animate={{ width: `${(quizNumber / totalQuizzes) * 100}%` }}
+                transition={{ duration: 0.5, ease: 'easeOut' }}
+              />
+            </div>
+          </div>
           <div className="mb-6">
             <p className="text-gray-200 text-lg">{quiz.scenario}</p>
           </div>
