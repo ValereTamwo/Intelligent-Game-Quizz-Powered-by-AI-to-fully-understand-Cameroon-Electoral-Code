@@ -1,3 +1,12 @@
+import click from '../assets/sounds/click.mp3'
+import close from '../assets/sounds/close.mp3'
+import complete from '../assets/sounds/complete.mp3'
+import correct from '../assets/sounds/correct.mp3'
+import incorrect from '../assets/sounds/incorrect.mp3'
+
+
+
+
 class SoundManager {
     constructor() {
       this.sounds = {};
@@ -25,10 +34,10 @@ class SoundManager {
   const soundManager = new SoundManager();
   
   // Preload sounds
-  soundManager.loadSound('click', '/assets/sounds/click.mp3');
-  soundManager.loadSound('correct', '/assets/sounds/correct.mp3');
-  soundManager.loadSound('incorrect', '/assets/sounds/incorrect.mp3');
-  soundManager.loadSound('complete', '/assets/sounds/complete.mp3');
-  soundManager.loadSound('close', '/assets/sounds/close.mp3');
+  soundManager.loadSound('click', click);
+  soundManager.loadSound('correct', correct);
+  soundManager.loadSound('incorrect', incorrect);
+  soundManager.loadSound('complete', complete);
+  soundManager.loadSound('close', close);
   
   export default soundManager;

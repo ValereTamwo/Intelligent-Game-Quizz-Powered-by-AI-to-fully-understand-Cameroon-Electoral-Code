@@ -3,10 +3,10 @@ import { motion } from 'framer-motion';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import LevelMap from './components/LevelMap';
-import QuizModal from './components/QizzModal';
 import QuizRecapModal from './components/QuizRecapModal';
 import LoadingSpinner from './components/LoadingSpinner';
-
+import soundManager from './utils/SoundManager';
+import QuizModal from './components/QizzModal';
 function App() {
   const [currentLevel, setCurrentLevel] = useState(1);
   const [completedLevels, setCompletedLevels] = useState([]);
@@ -17,6 +17,7 @@ function App() {
   const [showRecapModal, setShowRecapModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [quizResults, setQuizResults] = useState([]);
+  const [isSoundMuted, setIsSoundMuted] = useState(false);
 
   const topics = [
     { id: 1, title: "Titre I : Généralités", description: "Introduction au Code Électoral." },
@@ -67,6 +68,12 @@ function App() {
     { id: 46, title: "Dispositions Diverses", description: "Autres règles et abrogations." }
   ];
 
+
+  const toggleSound = () => {
+    setIsSoundMuted(!isSoundMuted);
+    soundManager.setMuted(!isSoundMuted);
+  };
+
   const fetchQuiz = async (levelId) => {
     const topic = topics.find((t) => t.id === levelId);
     if (!topic) return;
@@ -78,7 +85,7 @@ function App() {
       });
       setCurrentQuiz(response.data.quiz);
       setShowQuizModal(true);
-      setQuizNumber((prev) => prev + 1); // Increment quizNumber after API response
+      setQuizNumber((prev) => prev + 1);
     } catch (error) {
       console.error('Error fetching quiz:', error);
       toast.error('Failed to load quiz. Please try again.');
@@ -90,12 +97,14 @@ function App() {
   const handleLevelClick = (levelId) => {
     if (levelId === currentLevel) {
       console.log(`Niveau ${levelId} cliqué : "${topics[levelId - 1].title}"`);
+      soundManager.playSound('click');
       setQuizNumber(0);
       setSuccessCount(0);
       setQuizResults([]);
       fetchQuiz(levelId);
     } else if (levelId < currentLevel && completedLevels.includes(levelId)) {
       toast.info(`Niveau ${levelId} déjà complété. Vous pouvez le rejouer.`);
+      soundManager.playSound('click');
       setQuizNumber(0);
       setSuccessCount(0);
       setQuizResults([]);
@@ -112,11 +121,12 @@ function App() {
     if (isCorrect) {
       setSuccessCount(successCount + 1);
       toast.success('Correct! Well done!');
+      soundManager.playSound('correct');
     } else {
       toast.error('Incorrect. Try again next time!');
+      soundManager.playSound('incorrect');
     }
 
-    // Store quiz result
     setQuizResults([
       ...quizResults,
       {
@@ -132,6 +142,9 @@ function App() {
       setShowQuizModal(false);
       setCurrentQuiz(null);
       setShowRecapModal(true);
+      if (successCount >= 5) {
+        soundManager.playSound('complete');
+      }
     }
   };
 
@@ -150,11 +163,17 @@ function App() {
   };
 
   const closeQuizModal = () => {
+    soundManager.playSound('close');
     setShowQuizModal(false);
     setCurrentQuiz(null);
     setQuizNumber(0);
     setSuccessCount(0);
     setQuizResults([]);
+  };
+
+  const closeRecapModal = () => {
+    soundManager.playSound('close');
+    setShowRecapModal(false);
   };
 
   return (
@@ -165,9 +184,17 @@ function App() {
         transition={{ duration: 0.8, ease: 'easeOut' }}
         className="p-6 text-center bg-black bg-opacity-50 backdrop-blur-md"
       >
-        <h1 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400">
-          Le Parcours du Citoyen Éclairé
-        </h1>
+        <div className="flex justify-between items-center">
+          <h1 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400">
+            Le Parcours du Citoyen Éclairé
+          </h1>
+          <button
+            onClick={toggleSound}
+            className="text-white bg-gray-700 p-2 rounded-full hover:bg-gray-600 transition-colors"
+          >
+            {isSoundMuted ? '🔇' : '🔊'}
+          </button>
+        </div>
         <p className="mt-2 text-lg md:text-xl text-gray-300">
           Apprenez le Code Électoral du Cameroun niveau par niveau !
         </p>
@@ -195,7 +222,7 @@ function App() {
             quizResults={quizResults}
             successCount={successCount}
             onProceed={handleRecapProceed}
-            onClose={() => setShowRecapModal(false)}
+            onClose={closeRecapModal}
           />
         )}
       </main>

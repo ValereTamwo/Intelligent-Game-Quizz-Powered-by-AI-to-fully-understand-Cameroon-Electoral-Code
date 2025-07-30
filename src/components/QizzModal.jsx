@@ -1,7 +1,13 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import soundManager from '../utils/SoundManager';
 
 const QuizModal = ({ quiz, onAnswer, onClose, quizNumber, totalQuizzes, successCount }) => {
+  const handleAnswer = (answerId) => {
+    soundManager.playSound('click');
+    onAnswer(answerId);
+  };
+
   return (
     <AnimatePresence>
       <motion.div
@@ -46,7 +52,7 @@ const QuizModal = ({ quiz, onAnswer, onClose, quizNumber, totalQuizzes, successC
             {quiz.choices.map((choice) => (
               <motion.button
                 key={choice.id}
-                onClick={() => onAnswer(choice.id)}
+                onClick={() => handleAnswer(choice.id)}
                 className="w-full p-4 rounded-lg bg-gradient-to-r from-purple-600 to-blue-600 text-white font-semibold hover:bg-gradient-to-r hover:from-purple-500 hover:to-blue-500 transition-all duration-300"
                 whileHover={{ scale: 1.05, boxShadow: '0 0 15px rgba(139, 92, 246, 0.5)' }}
                 whileTap={{ scale: 0.95 }}
