@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import LevelMap from './components/LevelMap';
+import QuizModal from './components/QizzModal';
 import QuizRecapModal from './components/QuizRecapModal';
 import LoadingSpinner from './components/LoadingSpinner';
 import soundManager from './utils/SoundManager';
-import QuizModal from './components/QizzModal';
+import coat from "./assets/photos/coat.png"
+import  flag from "./assets/photos/flag.jpeg"
 function App() {
   const [currentLevel, setCurrentLevel] = useState(1);
   const [completedLevels, setCompletedLevels] = useState([]);
@@ -18,6 +20,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [quizResults, setQuizResults] = useState([]);
   const [isSoundMuted, setIsSoundMuted] = useState(false);
+  const [showLandingPage, setShowLandingPage] = useState(true);
 
   const topics = [
     { id: 1, title: "Titre I : Généralités", description: "Introduction au Code Électoral." },
@@ -68,10 +71,14 @@ function App() {
     { id: 46, title: "Dispositions Diverses", description: "Autres règles et abrogations." }
   ];
 
-
   const toggleSound = () => {
     setIsSoundMuted(!isSoundMuted);
     soundManager.setMuted(!isSoundMuted);
+  };
+
+  const handleStartGame = () => {
+    soundManager.playSound('click');
+    setShowLandingPage(false);
   };
 
   const fetchQuiz = async (levelId) => {
@@ -178,62 +185,120 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900 text-white flex flex-col">
-      <motion.header
-        initial={{ opacity: 0, y: -50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: 'easeOut' }}
-        className="p-6 text-center bg-black bg-opacity-50 backdrop-blur-md"
-      >
-        <div className="flex justify-between items-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400">
-            Le Parcours du Citoyen Éclairé
-          </h1>
-          <button
-            onClick={toggleSound}
-            className="text-white bg-gray-700 p-2 rounded-full hover:bg-gray-600 transition-colors"
+      <AnimatePresence>
+        {showLandingPage ? (
+          <motion.div
+            key="landing"
+            className="fixed inset-0 flex flex-col items-center justify-center p-6"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
           >
-            {isSoundMuted ? '🔇' : '🔊'}
-          </button>
-        </div>
-        <p className="mt-2 text-lg md:text-xl text-gray-300">
-          Apprenez le Code Électoral du Cameroun niveau par niveau !
-        </p>
-      </motion.header>
-      <main className="flex-grow p-6">
-        {isLoading && <LoadingSpinner />}
-        <LevelMap
-          topics={topics}
-          currentLevel={currentLevel}
-          completedLevels={completedLevels}
-          onLevelClick={handleLevelClick}
-        />
-        {showQuizModal && currentQuiz && (
-          <QuizModal
-            quiz={currentQuiz}
-            onAnswer={handleQuizAnswer}
-            onClose={closeQuizModal}
-            quizNumber={quizNumber}
-            totalQuizzes={5}
-            successCount={successCount}
-          />
+            <motion.div
+              className="flex flex-col items-center text-center"
+              initial={{ scale: 0.8, y: 50 }}
+              animate={{ scale: 1, y: 0 }}
+              transition={{ type: 'spring', stiffness: 200, damping: 20 }}
+            >
+              <motion.img
+                src={flag}
+                alt="Cameroon Flag"
+                className="w-24 h-16 mb-4 shadow-lg shadow-purple-500/50"
+                animate={{ y: [0, -10, 0], rotate: [0, 5, -5, 0] }}
+                transition={{ repeat: Infinity, duration: 3 }}
+              />
+              <motion.img
+                src={coat}
+                alt="Cameroon Coat of Arms"
+                className="w-32 h-32 mb-6 shadow-lg shadow-blue-500/50"
+                animate={{ scale: [1, 1.05, 1] }}
+                transition={{ repeat: Infinity, duration: 2 }}
+              />
+              <h1 className="text-5xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400 mb-4">
+                Le Parcours du Citoyen Éclairé
+              </h1>
+              <p className="text-lg md:text-xl text-gray-300 mb-8 max-w-md">
+                Testez vos connaissances du Code Électoral du Cameroun dans une aventure interactive !
+              </p>
+              <motion.button
+                onClick={handleStartGame}
+                className="px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg text-xl font-semibold hover:bg-gradient-to-r hover:from-purple-500 hover:to-blue-500 transition-all duration-300 shadow-lg shadow-purple-500/50"
+                whileHover={{ scale: 1.1, boxShadow: '0 0 20px rgba(139, 92, 246, 0.7)' }}
+                whileTap={{ scale: 0.95 }}
+              >
+                Commencer
+              </motion.button>
+            </motion.div>
+          </motion.div>
+        ) : (
+          <motion.div
+            key="game"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+            className="flex flex-col min-h-screen"
+          >
+            <motion.header
+              initial={{ opacity: 0, y: -50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: 'easeOut' }}
+              className="p-6 text-center bg-black bg-opacity-50 backdrop-blur-md"
+            >
+              <div className="flex justify-between items-center">
+                <h1 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400">
+                  Le Parcours du Citoyen Éclairé
+                </h1>
+                <button
+                  onClick={toggleSound}
+                  className="text-white bg-gray-700 p-2 rounded-full hover:bg-gray-600 transition-colors"
+                >
+                  {isSoundMuted ? '🔇' : '🔊'}
+                </button>
+              </div>
+              <p className="mt-2 text-lg md:text-xl text-gray-300">
+                Apprenez le Code Électoral du Cameroun niveau par niveau !
+              </p>
+            </motion.header>
+            <main className="flex-grow p-6">
+              {isLoading && <LoadingSpinner />}
+              <LevelMap
+                topics={topics}
+                currentLevel={currentLevel}
+                completedLevels={completedLevels}
+                onLevelClick={handleLevelClick}
+              />
+              {showQuizModal && currentQuiz && (
+                <QuizModal
+                  quiz={currentQuiz}
+                  onAnswer={handleQuizAnswer}
+                  onClose={closeQuizModal}
+                  quizNumber={quizNumber}
+                  totalQuizzes={5}
+                  successCount={successCount}
+                />
+              )}
+              {showRecapModal && (
+                <QuizRecapModal
+                  quizResults={quizResults}
+                  successCount={successCount}
+                  onProceed={handleRecapProceed}
+                  onClose={closeRecapModal}
+                />
+              )}
+            </main>
+            <motion.footer
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: 'easeOut' }}
+              className="p-4 text-center bg-black bg-opacity-50 backdrop-blur-md"
+            >
+              <p className="text-sm text-gray-400">© Hackathon Cameroun 2024 - Projet Code Électoral</p>
+            </motion.footer>
+          </motion.div>
         )}
-        {showRecapModal && (
-          <QuizRecapModal
-            quizResults={quizResults}
-            successCount={successCount}
-            onProceed={handleRecapProceed}
-            onClose={closeRecapModal}
-          />
-        )}
-      </main>
-      <motion.footer
-        initial={{ opacity: 0, y: 50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: 'easeOut' }}
-        className="p-4 text-center bg-black bg-opacity-50 backdrop-blur-md"
-      >
-        <p className="text-sm text-gray-400">© Hackathon Cameroun 2024 - Projet Code Électoral</p>
-      </motion.footer>
+      </AnimatePresence>
       <ToastContainer position="top-right" autoClose={3000} />
     </div>
   );
